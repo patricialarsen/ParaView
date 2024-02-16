@@ -122,6 +122,12 @@ double GetDoubleFromRawBuffer(const int type, void* buffer, vtkIdType buffer_idx
       dataItem = static_cast<double>(dataPtr[buffer_idx]);
     }
     break;
+    case gio::GENERIC_IO_UINT16_TYPE:
+    {
+      uint16_t* dataPtr = static_cast<uint16_t*>(buffer);
+      dataItem = static_cast<double>(dataPtr[buffer_idx]);
+    }
+    break;
     case gio::GENERIC_IO_UINT32_TYPE:
     {
       uint32_t* dataPtr = static_cast<uint32_t*>(buffer);
@@ -171,6 +177,12 @@ vtkIdType GetIdFromRawBuffer(const int type, void* buffer, vtkIdType buffer_idx)
     case gio::GENERIC_IO_INT64_TYPE:
     {
       int64_t* dataPtr = static_cast<int64_t*>(buffer);
+      dataItem = static_cast<vtkIdType>(dataPtr[buffer_idx]);
+    }
+    break;
+    case gio::GENERIC_IO_UINT16_TYPE:
+    {
+      uint16_t* dataPtr = static_cast<uint16_t*>(buffer);
       dataItem = static_cast<vtkIdType>(dataPtr[buffer_idx]);
     }
     break;

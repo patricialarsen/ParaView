@@ -17,6 +17,7 @@
 #include "vtkTypeInt64Array.h"
 #include "vtkTypeUInt64Array.h"
 #include "vtkUnsignedIntArray.h"
+#include "vtkUnsignedShortArray.h"
 #include "vtkUnstructuredGrid.h"
 
 #include "vtkGenericIOUtilities.h"
@@ -156,6 +157,10 @@ static inline gio::GenericIOPrimitiveTypes getGIOTypeFor(vtkDataArray* array)
   {
     return gio::GENERIC_IO_UINT32_TYPE;
   }
+  else if (vtkUnsignedShortArray::FastDownCast(array) != nullptr)
+  {
+    return gio::GENERIC_IO_UINT16_TYPE;
+  }
   else if (vtkTypeUInt64Array::FastDownCast(array) != nullptr)
   {
     return gio::GENERIC_IO_UINT64_TYPE;
@@ -203,6 +208,16 @@ static inline void computeDataForArray(
     {
       long long* ptr = (long long*)data;
       vtkTypeInt64Array* darray = vtkTypeInt64Array::FastDownCast(array);
+      for (int j = 0; j < array->GetNumberOfTuples(); ++j)
+      {
+        ptr[j] = darray->GetTuple(j)[indexInTuple];
+      }
+    }
+    break;
+    case gio::GENERIC_IO_UINT16_TYPE:
+    {
+      unsigned int* ptr = (unsigned int*)data;
+      vtkUnsignedShortArray* darray = vtkUnsignedShortArray::FastDownCast(array);
       for (int j = 0; j < array->GetNumberOfTuples(); ++j)
       {
         ptr[j] = darray->GetTuple(j)[indexInTuple];
